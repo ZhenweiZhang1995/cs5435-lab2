@@ -10,15 +10,6 @@
 </head>
 
 <body>
-    <div class="profile-container">
-        <h1 class="profile-header">{{ user.username }}</h1>
-        <div>
-            <strong>Coins:</strong> {{ user.coins }}
-            <br>
-            <strong>About Me:</strong><br>{{ user.aboutme}}
-        </div>
-    </div>
-
     <div class="payment-form">
         <h3 class="payment-header">Make payment?</h3>
         <form action="http://localhost:8080/pay" method="post" target="submitPayment">
