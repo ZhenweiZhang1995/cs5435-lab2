@@ -17,6 +17,7 @@ from app.models.session import (
 @post('/pay')
 @logged_in
 def do_payment(db, session):
+    print("hi,session Id: " + session.get_id())
     sender = get_user(db, session.get_username())
     recipient = db.execute(
         "SELECT * FROM users WHERE users.username='{}' LIMIT 1 OFFSET 0".format(
@@ -37,6 +38,9 @@ def do_payment(db, session):
     elif (recipient['username'] == sender.username):
         response.status = 400
         error = "Cannot pay self."
+    elif(session.get_id() != request.forms.get('session_token') ):
+        response.status = 400
+        error = "Invalid token,detects CSRF attack"
     else:
         sender.debit_coins(payment_amount)
         db.execute(

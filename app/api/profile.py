@@ -25,6 +25,7 @@ def profile(db, session, username):
         "profile",
         user=user,
         session_user=session_user,
+        session_id= session.get_id()
     )
 
 @post('/aboutme')
