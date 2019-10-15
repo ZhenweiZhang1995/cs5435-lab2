@@ -39,7 +39,7 @@ def do_payment(db, session):
         response.status = 400
         error = "Cannot pay self."
     elif(session.get_id() != request.forms.get('session_token') ):
-        response.status = 400
+       response.status = 400
         error = "Invalid token,detects CSRF attack"
     else:
         sender.debit_coins(payment_amount)
